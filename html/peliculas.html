@@ -10,15 +10,25 @@
     <title>Lista de Populares</title>
 </head>
 
-<body>
+<body class="yep">
 
-    <div class="mostrador" id="verPelis">
+    <div class="container" id="verPelis">
+        <div class="text-center">
+            <h3>
+                Peliculas mas populares
+            </h3>
+        </div>
         <div class="targeta" v-for="p in peliculas">
             <div class="text-center">
-                <button @click="detalles(p)"> <img class="poster" v-bind:src="imgRoute + p.poster_path"width="100" src=></button>
+                <img class="poster" v-bind:src="imgRoute + p.poster_path"width="100" src=>
             </div>
-            <p>{{p.title }}</p>
-            <p>{{p.release_date}}</p>
+            <div>
+                <p style="color:black">{{p.title }}</p>
+                <p style="color:black">{{p.release_date}}</p>
+            </div>
+            <div class="text-center">
+                <button @click="detalles(p)" class="btn btn-primary">Detalles</button>
+            </div>
 
         </div>
     </div>
@@ -40,7 +50,8 @@
             },
             methods: {
                 detalles(p) {
-                    console.log(p)
+                    localStorage.setItem('pelicula',JSON.stringify(p));
+                    window.location.href = "pelicula.html";
                 }
             },
             mounted() {
