@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/peliculas.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Lista de Populares</title>
+</head>
+
+<body>
+
+    <div class="mostrador" id="verPelis">
+        <div class="targeta" v-for="p in peliculas">
+            <div class="text-center">
+                <button @click="detalles(p)"> <img class="poster" v-bind:src="imgRoute + p.poster_path"width="100" src=></button>
+            </div>
+            <p>{{p.title }}</p>
+            <p>{{p.release_date}}</p>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const {
+            createApp
+        } = Vue
+
+        const myApp = createApp({
+            data() {
+                return {
+                    peliculas: null,
+                    imgRoute: 'https://image.tmdb.org/t/p/w500/'
+                }
+            },
+            methods: {
+                detalles(p) {
+                    console.log(p)
+                }
+            },
+            mounted() {
+                fetch('https://api.themoviedb.org/3/movie/popular?api_key=038eb1b67a577ce9afaf326a641856f8')
+                    .then((response) => response.json())
+                    .then((res) => (this.peliculas = res.results))
+                    .catch((error) => console.log('error', error));
+            }
+        }).mount('#verPelis')
+    </script>
+</body>
+
+</html>
